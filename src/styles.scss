@@ -1,4 +1,86 @@
-/* You can add global styles to this file, and also import other style files */
+@use "@angular/material" as mat;
 
-html, body { height: 100%; }
-body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+@include mat.core();
+
+$primary: mat.define-palette(mat.$blue-grey-palette, 400);
+$accent: mat.define-palette(mat.$green-palette, 400);
+$warn: mat.define-palette(mat.$red-palette);
+
+$dark-theme: mat.define-dark-theme(
+  (
+    color: (
+      primary: $primary,
+      accent: $accent,
+      warn: $warn,
+    ),
+    density: 0,
+  )
+);
+
+@include mat.all-component-themes($dark-theme);
+
+:root {
+  --ink: #35374b;
+  --deep: #344955;
+  --slate: #50727b;
+  --sage: #78a083;
+}
+
+html,
+body {
+  height: 100%;
+}
+body {
+  margin: 0;
+  color: rgba(255, 255, 255, 0.92);
+
+  background: radial-gradient(
+    1200px 900px at 70% -240px,
+    rgba(120, 160, 131, 0.14) 0%,
+    rgba(80, 114, 123, 0.24) 38%,
+    #35374b 100%
+  );
+
+  background: radial-gradient(
+    1200px 900px at 70% -240px,
+    color-mix(in srgb, var(--sage) 14%, black) 0%,
+    color-mix(in srgb, var(--slate) 24%, black) 38%,
+    var(--ink) 100%
+  );
+}
+
+.mat-mdc-card,
+.mat-mdc-menu-panel,
+.mat-mdc-table {
+  background: rgba(52, 73, 85, 0.58);
+  border: 1px solid rgba(120, 160, 131, 0.24);
+  backdrop-filter: blur(8px);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.22);
+}
+
+.mat-toolbar {
+  background: linear-gradient(
+    to right,
+    rgba(52, 73, 85, 0.9),
+    rgba(53, 55, 75, 0.9)
+  ) !important;
+  border-bottom: 1px solid rgba(120, 160, 131, 0.24);
+}
+
+.mdc-text-field--filled,
+.mdc-text-field--outlined {
+  background: rgba(255, 255, 255, 0.06) !important;
+}
+
+.mat-mdc-row:hover {
+  background: rgba(255, 255, 255, 0.06);
+}
+
+.mdc-button,
+.mdc-raised-button {
+  border-radius: 12px !important;
+}
+
+.p-4 {
+  padding: 1rem;
+}
