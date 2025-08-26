@@ -1,0 +1,31 @@
+<mat-toolbar color="primary">
+  <button
+    mat-icon-button
+    [matMenuTriggerFor]="navMenu"
+    aria-label="Open navigation menu"
+    class="mr-2"
+  >
+    <mat-icon>menu</mat-icon>
+  </button>
+
+  <a routerLink="/" class="title-link">Kitchen Helper</a>
+  <span class="spacer"></span>
+
+  <a mat-button routerLink="/ingredients">Add Ingredient</a>
+</mat-toolbar>
+
+<mat-menu #navMenu="matMenu" xPosition="after" yPosition="below">
+  <button mat-menu-item routerLink="/ingredients">
+    <mat-icon>kitchen</mat-icon><span>Ingredients</span>
+  </button>
+  <button mat-menu-item routerLink="/recipes">
+    <mat-icon>restaurant_menu</mat-icon><span>Recipes</span>
+  </button>
+  <button mat-menu-item routerLink="/finder">
+    <mat-icon>search</mat-icon><span>Finder</span>
+  </button>
+</mat-menu>
+
+<div class="p-4">
+  <router-outlet></router-outlet>
+</div>
