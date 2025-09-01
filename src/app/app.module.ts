@@ -24,6 +24,7 @@ import { MatDialogModule } from '@angular/material/dialog';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatCardModule } from '@angular/material/card';
 import { MatMenuModule } from '@angular/material/menu';
+import { RecipeListComponent } from './pages/recipes/recipe-list/recipe-list.component';
 
 @NgModule({
   declarations: [
@@ -33,6 +34,7 @@ import { MatMenuModule } from '@angular/material/menu';
     RecipesComponent,
     FinderComponent,
     AddIngredientDialogComponent,
+    RecipeListComponent,
   ],
   imports: [
     BrowserModule,

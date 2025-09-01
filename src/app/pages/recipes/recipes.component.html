@@ -1,1 +1,12 @@
-<p>recipes works!</p>
+<h2>All Recipes</h2>
+
+<ng-container *ngIf="vm$ | async as vm">
+  <div *ngIf="vm.state === 'loading'">Loading…</div>
+
+  <div *ngIf="vm.state === 'error'" class="error">
+    {{ vm.message }}
+  </div>
+
+  <app-recipe-list *ngIf="vm.state === 'loaded'" [recipes]="vm.recipes">
+  </app-recipe-list>
+</ng-container>
