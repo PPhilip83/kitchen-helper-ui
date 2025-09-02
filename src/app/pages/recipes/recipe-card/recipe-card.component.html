@@ -1,0 +1,38 @@
+<ng-container *ngIf="recipe as r">
+  <article class="card" role="dialog" aria-label="Recipe details">
+    <header class="card__header">
+      <h3 class="card__title">{{ r.name }}</h3>
+      <button
+        type="button"
+        class="close"
+        (click)="close()"
+        aria-label="Close details"
+      >
+        ✕
+      </button>
+    </header>
+
+    <section class="card__body" *ngIf="r.ingredients?.length">
+      <h4 class="card__subtitle">Ingredients</h4>
+      <ul class="ingredients">
+        <li *ngFor="let ing of r.ingredients">
+          <span class="qty" *ngIf="formatQuantity(ing)">{{
+            formatQuantity(ing)
+          }}</span>
+          <span class="unit" *ngIf="ing.unit">&nbsp;{{ ing.unit }}</span>
+          <span class="name">&nbsp;{{ ing.ingredientName }}</span>
+        </li>
+      </ul>
+    </section>
+
+    <section class="card__body" *ngIf="r.instructions">
+      <h4 class="card__subtitle">Instructions</h4>
+      <p>{{ r.instructions }}</p>
+    </section>
+
+    <section class="card__body" *ngIf="r.notes">
+      <h4 class="card__subtitle">Notes</h4>
+      <p>{{ r.notes }}</p>
+    </section>
+  </article>
+</ng-container>

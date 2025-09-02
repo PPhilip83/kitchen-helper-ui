@@ -2,12 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable, catchError, map, throwError } from 'rxjs';
 import { environment } from 'src/environments/environment';
-
-export interface Recipe {
-  pkId: number;
-  name: string;
-  instructions: string;
-}
+import { Recipe } from 'src/app/models';
 
 @Injectable({ providedIn: 'root' })
 export class RecipeService {

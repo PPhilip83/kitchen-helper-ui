@@ -1,10 +1,11 @@
 import { Component } from '@angular/core';
 import { Observable, catchError, map, of, startWith } from 'rxjs';
-import { Recipe, RecipeService } from './recipes.service';
+import { RecipeService } from './recipes.service';
+import { Recipe } from 'src/app/models';
 
-type Vm =
+type RecipesViewModel =
   | { state: 'loading' }
-  | { state: 'error'; message: string }
+  | { state: 'error'; errorMessage: string }
   | { state: 'loaded'; recipes: Recipe[] };
 
 @Component({
@@ -12,15 +13,29 @@ type Vm =
   templateUrl: './recipes.component.html',
 })
 export class RecipesComponent {
-  vm$: Observable<Vm>;
+  recipesViewModel$: Observable<RecipesViewModel>;
+  selectedRecipe: Recipe | null = null;
 
   constructor(private recipeService: RecipeService) {
-    this.vm$ = this.recipeService.getAllRecipes().pipe(
-      map((recipes) => ({ state: 'loaded', recipes } as Vm)),
-      startWith({ state: 'loading' } as Vm),
-      catchError((err) =>
-        of({ state: 'error', message: 'Failed to load recipes.' } as Vm)
+    this.recipesViewModel$ = this.recipeService.getAllRecipes().pipe(
+      map(
+        (recipes) =>
+          ({ state: 'loaded', recipes: recipes ?? [] } as RecipesViewModel)
+      ),
+      startWith({ state: 'loading' } as RecipesViewModel),
+      catchError(() =>
+        of({
+          state: 'error',
+          errorMessage: 'Failed to load recipes.',
+        } as RecipesViewModel)
       )
     );
+  }
+
+  handleRecipeSelected(recipe: Recipe) {
+    this.selectedRecipe = recipe;
+  }
+  handleCloseDetails() {
+    this.selectedRecipe = null;
   }
 }

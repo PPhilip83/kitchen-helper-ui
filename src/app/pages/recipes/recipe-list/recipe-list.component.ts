@@ -1,5 +1,5 @@
-import { Component, Input } from '@angular/core';
-import { Recipe } from '../recipes.service';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { Recipe } from 'src/app/models';
 
 @Component({
   selector: 'app-recipe-list',
@@ -8,6 +8,12 @@ import { Recipe } from '../recipes.service';
 })
 export class RecipeListComponent {
   @Input() recipes: Recipe[] = [];
+  @Output() recipeSelected = new EventEmitter<Recipe>();
 
-  trackById = (_: number, r: Recipe) => r.pkId;
+  trackByPkId = (_: number, r: Recipe) => r.pkId;
+
+  onSelect(recipe: Recipe) {
+    if (!recipe) return;
+    this.recipeSelected.emit(recipe);
+  }
 }

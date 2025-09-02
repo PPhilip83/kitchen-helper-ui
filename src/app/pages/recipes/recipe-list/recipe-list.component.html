@@ -1,29 +1,11 @@
 <div class="recipes-container" *ngIf="recipes?.length; else empty">
-  <div class="grid">
-    <article class="card" *ngFor="let recipe of recipes; trackBy: trackById">
-      <header class="card__header">
-        <h3 class="card__title">{{ recipe.name }}</h3>
-      </header>
-
-      <section class="card__body" *ngIf="recipe.instructions">
-        <h4 class="card__subtitle">Instructions</h4>
-        <p class="clamp">
-          {{ recipe.instructions }}
-        </p>
-      </section>
-
-      <!-- If you later include ingredients in the DTO:
-      <section class="card__body" *ngIf="recipe.ingredients?.length">
-        <h4 class="card__subtitle">Ingredients</h4>
-        <ul>
-          <li *ngFor="let ing of recipe.ingredients">
-            {{ ing.quantity }} {{ ing.unit }} {{ ing.ingredientName }}
-          </li>
-        </ul>
-      </section>
-      -->
-    </article>
-  </div>
+  <ul class="name-list">
+    <li *ngFor="let recipe of recipes; trackBy: trackByPkId">
+      <button type="button" class="name-button" (click)="onSelect(recipe)">
+        {{ recipe.name }}
+      </button>
+    </li>
+  </ul>
 </div>
 
 <ng-template #empty>

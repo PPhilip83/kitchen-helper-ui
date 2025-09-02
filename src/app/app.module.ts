@@ -25,6 +25,7 @@ import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatCardModule } from '@angular/material/card';
 import { MatMenuModule } from '@angular/material/menu';
 import { RecipeListComponent } from './pages/recipes/recipe-list/recipe-list.component';
+import { RecipeCardComponent } from './pages/recipes/recipe-card/recipe-card.component';
 
 @NgModule({
   declarations: [
@@ -35,6 +36,7 @@ import { RecipeListComponent } from './pages/recipes/recipe-list/recipe-list.com
     FinderComponent,
     AddIngredientDialogComponent,
     RecipeListComponent,
+    RecipeCardComponent,
   ],
   imports: [
     BrowserModule,

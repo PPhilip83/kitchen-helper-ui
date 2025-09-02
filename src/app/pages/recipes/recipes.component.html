@@ -1,12 +1,24 @@
 <h2>All Recipes</h2>
 
-<ng-container *ngIf="vm$ | async as vm">
-  <div *ngIf="vm.state === 'loading'">Loading…</div>
+<ng-container *ngIf="recipesViewModel$ | async as recipesViewModel">
+  <div *ngIf="recipesViewModel.state === 'loading'">Loading…</div>
 
-  <div *ngIf="vm.state === 'error'" class="error">
-    {{ vm.message }}
+  <div *ngIf="recipesViewModel.state === 'error'" class="error">
+    {{ recipesViewModel.errorMessage }}
   </div>
 
-  <app-recipe-list *ngIf="vm.state === 'loaded'" [recipes]="vm.recipes">
-  </app-recipe-list>
+  <ng-container *ngIf="recipesViewModel.state === 'loaded'">
+    <app-recipe-list
+      [recipes]="recipesViewModel.recipes"
+      (recipeSelected)="handleRecipeSelected($event)"
+    >
+    </app-recipe-list>
+
+    <app-recipe-card
+      *ngIf="selectedRecipe"
+      [recipe]="selectedRecipe"
+      (requestClose)="handleCloseDetails()"
+    >
+    </app-recipe-card>
+  </ng-container>
 </ng-container>
