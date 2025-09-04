@@ -1,21 +1,27 @@
-<h2 mat-dialog-title>Add Ingredient</h2>
-<mat-dialog-content class="mt-2">
-  <form #f="ngForm">
-    <mat-form-field appearance="outline" class="w-full">
-      <mat-label>Name</mat-label>
-      <input matInput name="name" [(ngModel)]="name" required />
-    </mat-form-field>
-    <mat-checkbox [(ngModel)]="have" name="have">I have this</mat-checkbox>
-  </form>
-</mat-dialog-content>
+<form #f="ngForm" novalidate>
+  <mat-form-field appearance="outline" class="w-full">
+    <mat-label>Name</mat-label>
+    <input
+      matInput
+      name="name"
+      [(ngModel)]="name"
+      required
+      (keydown.enter)="$event.preventDefault(); save()"
+    />
+  </mat-form-field>
+
+  <mat-checkbox [(ngModel)]="have" name="have">I have this</mat-checkbox>
+</form>
+
 <mat-dialog-actions align="end">
-  <button mat-button mat-dialog-close>Cancel</button>
+  <button mat-button mat-dialog-close [disabled]="isSaving">Cancel</button>
   <button
     mat-raised-button
     color="primary"
+    type="button"
     (click)="save()"
-    [disabled]="!name.trim()"
+    [disabled]="!name.trim() || isSaving"
   >
-    Save
+    {{ isSaving ? "Saving…" : "Save" }}
   </button>
 </mat-dialog-actions>

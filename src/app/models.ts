@@ -1,13 +1,13 @@
 export interface RecipeIngredient {
-  pkId: number;
+  pkId?: number;
   ingredientPkId: number;
   ingredientName: string;
-  quantity: number | string;
+  quantity: number | { source: string; parsedValue: number };
   unit: string | null;
 }
 
 export interface Recipe {
-  pkId: number;
+  pkId?: number;
   name: string;
   instructions: string;
   notes?: string | null;
@@ -15,7 +15,7 @@ export interface Recipe {
 }
 
 export interface Ingredient {
-  pkId: number;
+  pkId?: number;
   name: string;
   have: boolean;
 }

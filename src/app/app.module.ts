@@ -52,11 +52,11 @@ import { RecipeCardComponent } from './pages/recipes/recipe-card/recipe-card.com
     MatFormFieldModule,
     MatInputModule,
     MatTableModule,
-    MatCheckboxModule,
     MatDialogModule,
     MatSnackBarModule,
     MatCardModule,
     MatMenuModule,
+    MatCheckboxModule,
   ],
   bootstrap: [AppComponent],
 })

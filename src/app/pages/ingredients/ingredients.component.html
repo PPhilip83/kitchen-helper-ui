@@ -1,4 +1,7 @@
-<div *ngIf="ingredients.length === 0" class="max-w-xl mx-auto mt-12">
+<div
+  *ngIf="ingredients.length === 0 && !isLoading"
+  class="max-w-xl mx-auto mt-12"
+>
   <mat-card>
     <mat-card-title>Let’s stock your pantry</mat-card-title>
     <mat-card-content>
@@ -12,7 +15,9 @@
   </mat-card>
 </div>
 
-<div *ngIf="ingredients.length > 0">
+<div *ngIf="isLoading" class="mt-6">Loading…</div>
+
+<div *ngIf="ingredients.length > 0 && !isLoading">
   <div class="flex items-center gap-2 mb-3">
     <mat-form-field appearance="outline" class="w-80">
       <mat-label>Search ingredients</mat-label>
