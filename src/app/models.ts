@@ -19,3 +19,11 @@ export interface Ingredient {
   name: string;
   have: boolean;
 }
+
+export interface RecipeSuggestion {
+  recipeId: number;
+  recipeName: string;
+  totalCount: number;
+  missingCount: number;
+  missingIngredientNames: string[];
+}

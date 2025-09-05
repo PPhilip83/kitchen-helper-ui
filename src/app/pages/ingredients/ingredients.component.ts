@@ -1,9 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
-// import { Ingredient, IngredientService } from '../../core/ingredient.service';
-import { AddIngredientDialogComponent } from '../../shared/add-ingredient-dialog/add-ingredient-dialog.component';
 import { Ingredient } from 'src/app/models';
+import { AddIngredientDialogComponent } from '../../shared/add-ingredient-dialog/add-ingredient-dialog.component';
 import { IngredientService } from './ingredient.service';
 
 @Component({
@@ -11,19 +10,26 @@ import { IngredientService } from './ingredient.service';
   templateUrl: './ingredients.component.html',
 })
 export class IngredientsComponent implements OnInit {
-  ingredients: Ingredient[] = [];
   cols = ['have', 'name', 'actions'];
-  query = '';
+  ingredients: Ingredient[] = [];
   isLoading = false;
+  query = '';
 
   constructor(
-    private ingredientService: IngredientService,
     private dialog: MatDialog,
+    private ingredientService: IngredientService,
     private snack: MatSnackBar
   ) {}
 
   ngOnInit() {
     this.reload();
+  }
+
+  openAdd() {
+    this.dialog
+      .open(AddIngredientDialogComponent, { width: '420px' })
+      .afterClosed()
+      .subscribe((ok) => ok && this.reload());
   }
 
   reload() {
@@ -43,11 +49,18 @@ export class IngredientsComponent implements OnInit {
     });
   }
 
-  openAdd() {
-    this.dialog
-      .open(AddIngredientDialogComponent, { width: '420px' })
-      .afterClosed()
-      .subscribe((ok) => ok && this.reload());
+  remove(i: Ingredient) {
+    if (!i.pkId) return;
+    this.ingredientService.remove(i.pkId).subscribe({
+      next: () => {
+        this.snack.open('Removed', 'OK', { duration: 1500 });
+        this.reload();
+      },
+      error: (err) => {
+        console.error('Remove failed', err);
+        this.snack.open('Failed to remove', 'Dismiss', { duration: 2000 });
+      },
+    });
   }
 
   toggle(i: Ingredient) {
@@ -60,20 +73,6 @@ export class IngredientsComponent implements OnInit {
         console.error('Toggle failed', err);
         i.have = previous;
         this.snack.open('Failed to update', 'Dismiss', { duration: 2000 });
-      },
-    });
-  }
-
-  remove(i: Ingredient) {
-    if (!i.pkId) return;
-    this.ingredientService.remove(i.pkId).subscribe({
-      next: () => {
-        this.snack.open('Removed', 'OK', { duration: 1500 });
-        this.reload();
-      },
-      error: (err) => {
-        console.error('Remove failed', err);
-        this.snack.open('Failed to remove', 'Dismiss', { duration: 2000 });
       },
     });
   }

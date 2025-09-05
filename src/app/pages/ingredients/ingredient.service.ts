@@ -9,21 +9,16 @@ export class IngredientService {
   private readonly baseUrl = environment.apiBaseUrl.replace(/\/$/, '');
   private readonly ingredientsUrl = `${this.baseUrl}/ingredients`;
 
-  constructor(private http: HttpClient) {
-    console.log('ENV apiBaseUrl =', environment.apiBaseUrl);
-    console.log('ingredientsUrl =', this.ingredientsUrl);
-  }
+  constructor(private http: HttpClient) {}
 
   list(query?: string) {
     const url = query?.trim()
       ? `${this.ingredientsUrl}?query=${encodeURIComponent(query.trim())}`
       : this.ingredientsUrl;
-    console.log('GET →', url);
     return this.http.get<Ingredient[] | null>(url).pipe(map((r) => r ?? []));
   }
 
   create(request: { name: string; have: boolean }) {
-    console.log('POST →', this.ingredientsUrl);
     return this.http.post<Ingredient>(this.ingredientsUrl, request);
   }
 

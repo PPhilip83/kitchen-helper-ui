@@ -1,1 +1,54 @@
-<p>finder works!</p>
+<h2>What can I make?</h2>
+
+<div class="controls">
+  <button
+    mat-stroked-button
+    [color]="maxMissingSelected === 0 ? 'primary' : undefined"
+    (click)="setMaxMissing(0)"
+  >
+    Make now (0 missing)
+  </button>
+  <button
+    mat-stroked-button
+    [color]="maxMissingSelected === 1 ? 'primary' : undefined"
+    (click)="setMaxMissing(1)"
+  >
+    Near misses (≤ 1)
+  </button>
+  <button
+    mat-stroked-button
+    [color]="maxMissingSelected === 2 ? 'primary' : undefined"
+    (click)="setMaxMissing(2)"
+  >
+    Near misses (≤ 2)
+  </button>
+</div>
+
+<div *ngIf="isLoading" class="mt-4">Loading…</div>
+
+<div *ngIf="!isLoading && loadErrorMessage" class="error mt-4">
+  {{ loadErrorMessage }}
+</div>
+
+<div *ngIf="!isLoading && !loadErrorMessage">
+  <div *ngIf="!hasResults" class="empty">
+    No matching recipes. Try allowing more missing ingredients.
+  </div>
+
+  <div class="grid" *ngIf="hasResults">
+    <mat-card class="recipe" *ngFor="let s of suggestions; trackBy: trackById">
+      <mat-card-title>{{ s.recipeName }}</mat-card-title>
+      <mat-card-subtitle>
+        {{ s.totalCount - s.missingCount }}/{{ s.totalCount }} ingredients on
+        hand
+      </mat-card-subtitle>
+
+      <mat-card-content *ngIf="s.missingCount > 0">
+        <div class="missing-title">Missing:</div>
+        <ul class="missing-list">
+          <li *ngFor="let name of s.missingIngredientNames">{{ name }}</li>
+        </ul>
+      </mat-card-content>
+    </mat-card>
+  </div>
+</div>
